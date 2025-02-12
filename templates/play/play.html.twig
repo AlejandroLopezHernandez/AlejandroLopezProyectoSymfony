@@ -1,0 +1,64 @@
+<!DOCTYPE html> 
+<html lang="es"> 
+<head> 
+<meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ asset('./style.css')}}">
+  <title>MySpotify</title> 
+  </head> 
+  {%block body%}
+  <body> 
+    <nav>
+        <img src="{{ asset('./img/logo.png') }}" alt="icono" id="icono">
+        <h1>MySpotify</h1>
+        <div class="busqueda">
+            <input type="text" id="songName" placeholder="¿Qué canción buscas?" /> 
+            <button>Buscar</button>
+        </div>
+        <a href="www.google.es" target="_blank">
+            <img src="{{ asset('./img/user.png')}}" alt="imagen_usuario" id="img_login">
+        </a>
+    </nav>
+
+    <nav class="barra_lateral">
+        <ul>
+            <li><a onclick="mostrar_canciones()">Canción</a></li>
+            <li><a onclick="mostrar_playlist()">Playlist</a></li>
+        </ul>
+    </nav>
+
+<div id="contenido_body" class="inline-container">
+    <h2>Tus Canciones</h2>
+    {%for cancion in canciones%}
+    <div id="bucle_canciones" class="VistaCancion" onclick="ReproducirMusica('{{ cancion.titulo |e('js')}}')">
+    <img src="{{ asset('./img/corchea.gif')}}" alt="img_musica" id="img_corchea">
+    <h3>{{cancion.titulo}}</h3>
+    <h4>{{cancion.autor}}</h4>
+    <br>
+   </div>
+
+   {%else%}
+   <span>No tienes canciones en tu biblioteca</span>
+   {%endfor%}
+
+     <h2>Tus Playlists</h2>
+    {%for playlist in playlists%}
+        <div class="VistaPlaylist" onclick="cargarPlaylist('{{playlist.id}}')">
+        <img src="{{ asset('./img/playlist.png')}}" alt="playlist" id="img_playlist">
+            <h3>{{ playlist.nombre }}</h3>
+            <h4>Visibilidad: {{ playlist.visibilidad }}</h4>
+            <h4>Likes: {{ playlist.likes }}</h4>
+        </div>
+    {%else%}
+   <span>No tienes playlists en tu biblioteca</span>
+    {%endfor%}
+</div>
+
+   <audio id="audioPlayer" controls style="display: none; margin-top: 20px;"> 
+   Tu navegador no soporta el elemento de audio. </audio>
+</div>
+   <footer>2025 MySpotify. - Todos los derechos reservados</footer>
+   <script src="{{ asset('./script.js')}}"></script>
+         {% endblock %}
+         </body> 
+          </html>
